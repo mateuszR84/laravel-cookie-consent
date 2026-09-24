@@ -100,13 +100,13 @@ test('an embed slot replaces the default placeholder description', function () {
         ->not->toContain('cc-embed__description');
 });
 
-test('the settings link opens the preferences modal and accepts custom text and attributes', function () {
+test('the settings link is a button opening the preferences modal, with custom text and attributes', function () {
     config(['cookie-consent.categories.media.active' => true]);
 
     expect(blade('<x-cookie-consent::settings-link class="text-sm" />'))
-        ->toContain('<a href="#" data-cc="show-preferencesModal" class="text-sm">Cookie settings</a>')
+        ->toContain('<button type="button" data-cc="show-preferencesModal" class="text-sm">Cookie settings</button>')
         ->and(blade('<x-cookie-consent::settings-link>Cookies</x-cookie-consent::settings-link>'))
-        ->toContain('>Cookies</a>');
+        ->toContain('>Cookies</button>');
 });
 
 test('google analytics is not rendered when the analytics category is inactive', function () {

@@ -1,4 +1,4 @@
-{{-- Link otwierający okno ustawień, np. do stopki. Nic nie renderuje, gdy baner nie jest potrzebny. --}}
+{{-- Przycisk otwierający okno ustawień, np. do stopki (button, bo to akcja, nie nawigacja). Nic nie renderuje, gdy baner nie jest potrzebny. --}}
 @if (app(\StudioDevs\CookieConsent\CookieConsent::class)->isActive())
-    <a href="#" data-cc="show-preferencesModal" {{ $attributes }}>{{ $slot->isEmpty() ? app(\StudioDevs\CookieConsent\CookieConsent::class)->trans('settings_link') : $slot }}</a>
+    <button type="button" data-cc="show-preferencesModal" {{ $attributes }}>{{ $slot->isEmpty() ? app(\StudioDevs\CookieConsent\CookieConsent::class)->trans('settings_link') : $slot }}</button>
 @endif

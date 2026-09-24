@@ -19,7 +19,7 @@
                 {{ $slot }}
             @endif
             <button type="button" class="cc-embed__button" data-cc-embed-accept>{{ $cookieConsent->trans('embed.accept') }}</button>
-            <a href="#" class="cc-embed__settings" data-cc="show-preferencesModal">{{ $cookieConsent->trans('settings_link') }}</a>
+            <button type="button" class="cc-embed__settings" data-cc="show-preferencesModal">{{ $cookieConsent->trans('settings_link') }}</button>
         </div>
     </div>
 @endif
