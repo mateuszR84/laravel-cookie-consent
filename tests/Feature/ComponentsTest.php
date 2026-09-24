@@ -118,3 +118,19 @@ test('google analytics is not rendered when the analytics category is inactive',
 
     expect(blade('<x-cookie-consent::scripts />'))->not->toContain('G-TEST123');
 });
+
+test('the privacy policy can differ per locale', function () {
+    config([
+        'cookie-consent.categories.media.active' => true,
+        'cookie-consent.privacy_policy' => ['pl' => '/polityka-prywatnosci', 'en' => '/en/privacy-policy'],
+    ]);
+
+    config(['cookie-consent.locale' => 'pl']);
+    expect(app(CookieConsent::class)->privacyPolicyUrl())->toBe('/polityka-prywatnosci');
+
+    config(['cookie-consent.locale' => 'en']);
+    expect(app(CookieConsent::class)->privacyPolicyUrl())->toBe('/en/privacy-policy');
+
+    config(['cookie-consent.locale' => 'de']);
+    expect(app(CookieConsent::class)->privacyPolicyUrl())->toBe('/en/privacy-policy');
+});

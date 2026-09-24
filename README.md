@@ -57,7 +57,7 @@ Wszystkie trzy komponenty nic nie renderują, gdy żadna kategoria nie wymaga zg
 | `categories.<nazwa>.active` | Czy kategoria wymaga zgody. `analytics` włącza się sam, gdy jest ustawione `GOOGLE_ANALYTICS_ID`; `media` (`COOKIE_CONSENT_MEDIA`) i `marketing` (`COOKIE_CONSENT_MARKETING`) są domyślnie wyłączone. |
 | `categories.<nazwa>.auto_clear` | Cookies kasowane po wycofaniu zgody; `"/^_ga/"` to wyrażenie regularne. |
 | `google_analytics_id` | ID GA4 (`GOOGLE_ANALYTICS_ID`). |
-| `privacy_policy` | Nazwa trasy albo URL polityki prywatności; link trafia do stopki banera. |
+| `privacy_policy` | Nazwa trasy albo URL polityki prywatności; link trafia do stopki banera. Dla strony wielojęzycznej tablica per język: `['pl' => 'privacy.show', 'en' => 'privacy.show.en']`. |
 | `locale` | Język banera (`COOKIE_CONSENT_LOCALE`); `null` = język aplikacji, brak tłumaczenia = `fallback_locale`. |
 | `revision` | Podbij, żeby wszyscy zobaczyli baner ponownie (np. po dodaniu kategorii). |
 | `cookie` | Nazwa cookie ze zgodą i czas ważności w dniach. |

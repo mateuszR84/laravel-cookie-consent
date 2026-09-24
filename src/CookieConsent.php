@@ -84,6 +84,11 @@ class CookieConsent
     {
         $target = $this->config->get('cookie-consent.privacy_policy');
 
+        // Wersja per język: ['pl' => 'privacy', 'en' => 'privacy.en'].
+        if (is_array($target)) {
+            $target = $target[$this->locale()] ?? null;
+        }
+
         if (! $target) {
             return null;
         }

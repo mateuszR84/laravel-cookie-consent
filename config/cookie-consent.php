@@ -72,6 +72,8 @@ return [
     |--------------------------------------------------------------------------
     |
     | Nazwa trasy albo URL. Link trafia do stopki banera. null = bez linku.
+    | Strona wielojęzyczna: tablica per język, np.
+    | ['pl' => 'privacy.show', 'en' => 'privacy.show.en'].
     |
     */
 
