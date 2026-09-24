@@ -1,4 +1,4 @@
-{{-- Do <head>. Nic nie renderuje, gdy baner nie jest potrzebny. --}}
+{{-- Goes into <head>. Renders nothing when no banner is needed. --}}
 @php($cookieConsent = app(\StudioDevs\CookieConsent\CookieConsent::class))
 @if ($cookieConsent->isActive())
     <link rel="stylesheet" href="{{ $cookieConsent->assetUrl('cookieconsent.css') }}">

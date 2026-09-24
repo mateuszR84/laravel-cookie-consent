@@ -1,9 +1,15 @@
 {
     "name": "studiodevs/laravel-cookie-consent",
-    "description": "Baner zgody na cookies dla aplikacji Laravel (Blade), oparty na orestbida/cookieconsent v3: kategorie zgód, Google Analytics po zgodzie, blokowanie osadzonych iframe'ów do czasu zgody.",
+    "description": "Cookie consent banner for Laravel (Blade) built on orestbida/cookieconsent v3: consent categories, Google Analytics after consent, third-party iframes blocked until consent.",
     "type": "library",
     "license": "MIT",
-    "keywords": ["laravel", "cookies", "cookie-consent", "gdpr", "rodo"],
+    "keywords": [
+        "laravel",
+        "cookies",
+        "cookie-consent",
+        "gdpr",
+        "blade"
+    ],
     "authors": [
         {
             "name": "Mateusz Rycombel",

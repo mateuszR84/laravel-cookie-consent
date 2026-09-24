@@ -1,6 +1,6 @@
 /*
- * Uruchamia orestbida/cookieconsent z konfiguracją wygenerowaną przez komponent
- * <x-cookie-consent::scripts> i obsługuje osadzenia <x-cookie-consent::embed>.
+ * Runs orestbida/cookieconsent with the configuration rendered by
+ * <x-cookie-consent::scripts> and handles <x-cookie-consent::embed> placeholders.
  */
 (function () {
     'use strict';
@@ -14,7 +14,7 @@
     var CookieConsent = window.CookieConsent;
     var config = JSON.parse(configElement.textContent);
 
-    // RegExp nie przechodzi przez JSON - nazwy w postaci "/.../flagi" zamieniamy z powrotem na wyrażenia regularne.
+    // RegExp does not survive JSON - turn names written as "/.../flags" back into regular expressions.
     Object.keys(config.categories).forEach(function (name) {
         var autoClear = config.categories[name].autoClear;
 
@@ -71,7 +71,7 @@
     config.onConsent = updateEmbeds;
     config.onChange = updateEmbeds;
 
-    // "Zezwól i pokaż" w placeholderze: dokłada kategorię osadzenia do już zaakceptowanych.
+    // "Allow and show" in a placeholder: adds the embed's category to the already accepted ones.
     document.addEventListener('click', function (event) {
         var button = event.target.closest('[data-cc-embed-accept]');
 

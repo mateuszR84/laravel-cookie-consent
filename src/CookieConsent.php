@@ -8,9 +8,9 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Translation\Translator;
 
 /**
- * Tłumaczy config/cookie-consent.php i tłumaczenia paczki na konfigurację
- * biblioteki orestbida/cookieconsent oraz odpowiada na pytania komponentów
- * Blade (czy baner jest potrzebny, czy dana kategoria wymaga zgody).
+ * Turns config/cookie-consent.php and the package translations into the
+ * orestbida/cookieconsent configuration, and answers the Blade components'
+ * questions (is a banner needed, does a category require consent).
  */
 class CookieConsent
 {
@@ -28,7 +28,7 @@ class CookieConsent
     ) {}
 
     /**
-     * Baner jest potrzebny tylko, gdy paczka jest włączona i jakaś kategoria poza niezbędnymi wymaga zgody.
+     * A banner is needed only when the package is enabled and some category other than necessary requires consent.
      */
     public function isActive(): bool
     {
@@ -47,7 +47,7 @@ class CookieConsent
     }
 
     /**
-     * Czy treść z danej kategorii trzeba zablokować do czasu zgody.
+     * Whether content of the given category has to be blocked until consent.
      */
     public function requiresConsent(string $category): bool
     {
@@ -84,7 +84,7 @@ class CookieConsent
     {
         $target = $this->config->get('cookie-consent.privacy_policy');
 
-        // Wersja per język: ['pl' => 'privacy', 'en' => 'privacy.en'].
+        // Per-locale variant: ['en' => 'privacy', 'pl' => 'privacy.pl'].
         if (is_array($target)) {
             $target = $target[$this->locale()] ?? null;
         }
@@ -97,7 +97,7 @@ class CookieConsent
     }
 
     /**
-     * Wersjonowany URL pliku paczki - zmienia się razem z treścią pliku, więc może być cache'owany na długo.
+     * Versioned URL of a package file - it changes along with the file's contents, so it can be cached for long.
      */
     public function assetUrl(string $file): string
     {
@@ -113,7 +113,7 @@ class CookieConsent
     }
 
     /**
-     * Konfiguracja przekazywana do CookieConsent.run() (JSON w komponencie scripts).
+     * Configuration passed to CookieConsent.run() (as JSON in the scripts component).
      *
      * @return array<string, mixed>
      */

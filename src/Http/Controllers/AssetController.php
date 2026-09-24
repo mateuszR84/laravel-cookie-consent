@@ -13,8 +13,8 @@ class AssetController
     ];
 
     /**
-     * Pliki są serwowane prosto z vendor/, więc nie trzeba ich publikować do public/ po każdej aktualizacji
-     * paczki. URL-e z komponentów mają ?v=<hash treści>, dlatego cache może być roczny.
+     * Files are served straight from vendor/, so nothing has to be published to public/ after each package
+     * update. URLs rendered by the components carry ?v=<content hash>, which makes a one-year cache safe.
      */
     public function __invoke(string $file): BinaryFileResponse
     {

@@ -1,23 +1,26 @@
 # laravel-cookie-consent
 
-Baner zgody na cookies dla aplikacji Laravel z widokami Blade. Pod spodem jest
-[orestbida/cookieconsent](https://github.com/orestbida/cookieconsent) v3 (MIT), a paczka
-dokłada integrację z Laravelem:
+[![tests](https://github.com/mateuszR84/laravel-cookie-consent/actions/workflows/tests.yml/badge.svg)](https://github.com/mateuszR84/laravel-cookie-consent/actions/workflows/tests.yml)
 
-- kategorie zgód w `config/cookie-consent.php`; baner pojawia się **tylko wtedy, gdy jest
-  na co pytać** (strona bez analityki i bez osadzeń z zewnątrz nie dostaje banera),
-- Google Analytics (GA4) ładowany dopiero po zgodzie na kategorię „analytics”,
-- `<x-cookie-consent::embed>`: iframe z zewnątrz (Google Maps, YouTube) wstawiany dopiero po
-  zgodzie, do tego czasu placeholder z przyciskiem „Zezwól i pokaż”,
-- tłumaczenia pl i en,
-- pliki JS i CSS serwowane z `vendor/` z wersjonowanym URL-em i rocznym cache. Nie trzeba nic
-  publikować do `public/` ani budować przez Vite, a do zewnętrznego CDN nie idą żadne zapytania.
+A GDPR-friendly cookie consent banner for Laravel apps with Blade views. It is built on
+[orestbida/cookieconsent](https://github.com/orestbida/cookieconsent) v3 (MIT) and adds the
+Laravel integration around it:
 
-Wymaga PHP 8.3+ i Laravela 12 albo 13.
+- **Consent categories in `config/cookie-consent.php`.** The banner only appears **when there is
+  something to ask about**: a site with no analytics and no third-party embeds gets no banner
+  at all.
+- **Google Analytics (GA4)** loaded only after consent to the "analytics" category.
+- **`<x-cookie-consent::embed>`**: third-party iframes (Google Maps, YouTube) are inserted
+  only after consent. Until then visitors see a placeholder with an "Allow and show" button.
+- **English and Polish translations** included.
+- **JS/CSS served straight from `vendor/`** with versioned URLs and a one-year cache. There is
+  nothing to publish to `public/`, no Vite step, and no requests to a third-party CDN.
 
-## Instalacja
+Requires PHP 8.3+ and Laravel 12 or 13.
 
-Paczka nie jest na Packagist. Dodaj repozytorium do `composer.json` projektu:
+## Installation
+
+The package isn't on Packagist yet. Add the repository to your app's `composer.json`:
 
 ```json
 "repositories": [
@@ -30,7 +33,7 @@ composer require studiodevs/laravel-cookie-consent
 php artisan vendor:publish --tag=cookie-consent-config
 ```
 
-W layoucie:
+In your layout:
 
 ```blade
 <head>
@@ -47,60 +50,63 @@ W layoucie:
 </body>
 ```
 
-Wszystkie trzy komponenty nic nie renderują, gdy żadna kategoria nie wymaga zgody.
+All three components render nothing when no category requires consent.
 
-## Konfiguracja
+## Configuration
 
-| Klucz | Opis |
+| Key | Description |
 | --- | --- |
-| `enabled` | Główny włącznik (`COOKIE_CONSENT_ENABLED`). |
-| `categories.<nazwa>.active` | Czy kategoria wymaga zgody. `analytics` włącza się sam, gdy jest ustawione `GOOGLE_ANALYTICS_ID`; `media` (`COOKIE_CONSENT_MEDIA`) i `marketing` (`COOKIE_CONSENT_MARKETING`) są domyślnie wyłączone. |
-| `categories.<nazwa>.auto_clear` | Cookies kasowane po wycofaniu zgody; `"/^_ga/"` to wyrażenie regularne. |
-| `google_analytics_id` | ID GA4 (`GOOGLE_ANALYTICS_ID`). |
-| `privacy_policy` | Nazwa trasy albo URL polityki prywatności; link trafia do stopki banera. Dla strony wielojęzycznej tablica per język: `['pl' => 'privacy.show', 'en' => 'privacy.show.en']`. |
-| `locale` | Język banera (`COOKIE_CONSENT_LOCALE`); `null` = język aplikacji, brak tłumaczenia = `fallback_locale`. |
-| `revision` | Podbij, żeby wszyscy zobaczyli baner ponownie (np. po dodaniu kategorii). |
-| `cookie` | Nazwa cookie ze zgodą i czas ważności w dniach. |
-| `gui_options` | Przekazywane wprost do [`guiOptions`](https://cookieconsent.orestbida.com/reference/configuration-reference.html#guioptions) biblioteki. |
+| `enabled` | Master switch (`COOKIE_CONSENT_ENABLED`). |
+| `categories.<name>.active` | Whether the category requires consent. `analytics` switches on by itself when `GOOGLE_ANALYTICS_ID` is set; `media` (`COOKIE_CONSENT_MEDIA`) and `marketing` (`COOKIE_CONSENT_MARKETING`) are off by default. |
+| `categories.<name>.auto_clear` | Cookies erased when consent is withdrawn; `"/^_ga/"` is a regular expression. |
+| `google_analytics_id` | GA4 measurement ID (`GOOGLE_ANALYTICS_ID`). |
+| `privacy_policy` | Route name or URL of your privacy policy, linked in the banner footer. On a multilingual site, an array keyed by locale: `['en' => 'privacy', 'pl' => 'privacy.pl']`. |
+| `locale` | Banner language (`COOKIE_CONSENT_LOCALE`); `null` = the app locale, and a locale without translations uses `fallback_locale`. |
+| `revision` | Bump it to ask every visitor for consent again (e.g. after adding a category). |
+| `cookie` | Name and lifetime in days of the cookie storing the consent. |
+| `gui_options` | Passed as-is to the library's [`guiOptions`](https://cookieconsent.orestbida.com/reference/configuration-reference.html#guioptions). |
 
-**Własna kategoria:** dodaj klucz w `categories` i tłumaczenie
-`categories.<nazwa>.title` / `.description` (`php artisan vendor:publish --tag=cookie-consent-lang`).
+**Custom category:** add a key under `categories` and translations for
+`categories.<name>.title` / `.description` (`php artisan vendor:publish --tag=cookie-consent-lang`).
 
-**Własne skrypty po zgodzie:** biblioteka uruchamia każdy
-`<script type="text/plain" data-category="<nazwa>">` dopiero po zgodzie na tę kategorię.
+**Custom scripts after consent:** the library runs any
+`<script type="text/plain" data-category="<name>">` only once the user consents to that category.
 
-## Osadzenia z zewnątrz
+**Other languages:** publish the translations and add `lang/vendor/cookie-consent/<locale>/messages.php`.
+
+## Third-party embeds
 
 ```blade
 <x-cookie-consent::embed category="media"
     src="https://www.google.com/maps?q=...&output=embed"
-    title="Mapa dojazdu"
+    title="Map"
     class="h-full w-full"
     loading="lazy"
     allowfullscreen />
 ```
 
-Wszystkie atrybuty poza `category` i `src` trafiają na iframe. Slot zastępuje domyślny opis
-w placeholderze, np. statycznym obrazkiem mapy. Gdy kategoria nie wymaga zgody, komponent
-renderuje zwykły iframe.
+Every attribute except `category` and `src` goes onto the iframe. The slot replaces the
+default placeholder text, e.g. with a static map image. When the category requires no consent,
+the component renders a plain iframe.
 
-## Wygląd
+## Styling
 
-- **Baner i okno ustawień:** zmienne CSS biblioteki na `#cc-main`, np.
+- **Banner and preferences modal:** the library's CSS variables on `#cc-main`, e.g.
   `#cc-main { --cc-btn-primary-bg: #cc1f1f; --cc-font-family: inherit; }`
-  (pełna lista w [dokumentacji](https://cookieconsent.orestbida.com/advanced/ui-customization.html)).
-- **Placeholder osadzeń:** `--cc-embed-bg`, `--cc-embed-color`, `--cc-embed-button-bg`,
+  (see the full list in the [docs](https://cookieconsent.orestbida.com/advanced/ui-customization.html)).
+  For a dark theme, add the `cc--darkmode` class to `<html>`.
+- **Embed placeholder:** `--cc-embed-bg`, `--cc-embed-color`, `--cc-embed-button-bg`,
   `--cc-embed-button-color`, `--cc-embed-button-hover-bg`, `--cc-embed-button-radius`.
-- **Całkowita zmiana markupu:** `php artisan vendor:publish --tag=cookie-consent-views`.
+- **Custom markup:** `php artisan vendor:publish --tag=cookie-consent-views`.
 
-## Aktualizacja biblioteki orestbida
+## Updating orestbida/cookieconsent
 
-Pliki `dist/cookieconsent.umd.js` i `dist/cookieconsent.css` z paczki npm
-`vanilla-cookieconsent` leżą w `resources/dist/` (obecnie v3.1.0, licencja w
-`resources/dist/LICENSE-cookieconsent`). Po podmianie URL-e zmienią się same, bo wersja w
-`?v=` to hash treści pliku.
+`dist/cookieconsent.umd.js` and `dist/cookieconsent.css` from the `vanilla-cookieconsent` npm
+package live in `resources/dist/` (currently v3.1.0; licence in
+`resources/dist/LICENSE-cookieconsent`). After swapping them, the URLs change by themselves,
+because the `?v=` value is a hash of the file contents.
 
-## Testy
+## Testing
 
 ```bash
 composer install
@@ -108,6 +114,6 @@ vendor/bin/pest
 vendor/bin/pint --test
 ```
 
-## Licencja
+## Licence
 
 MIT

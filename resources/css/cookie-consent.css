@@ -1,7 +1,7 @@
 /*
- * Placeholder osadzeń <x-cookie-consent::embed>. Kolory przez zmienne CSS -
- * nadpisz je w CSS projektu (np. na :root). Wygląd samego banera zmienia się
- * zmiennymi biblioteki na #cc-main (--cc-btn-primary-bg itd.).
+ * Placeholder of <x-cookie-consent::embed>. Colours come from CSS variables -
+ * override them in your CSS (e.g. on :root). The banner itself is styled with
+ * the library's variables on #cc-main (--cc-btn-primary-bg etc.).
  */
 .cc-embed {
     position: relative;

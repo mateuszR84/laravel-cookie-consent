@@ -1,7 +1,7 @@
 {{--
-    Iframe z zewnętrznego serwisu (mapa, film), wstawiany dopiero po zgodzie na kategorię.
-    Wszystkie atrybuty poza "category" i "src" trafiają na iframe. Slot zastępuje domyślny opis w placeholderze.
-    Gdy kategoria nie wymaga zgody (nieaktywna w configu albo paczka wyłączona) - zwykły iframe.
+    Third-party iframe (map, video) inserted only after consent to its category.
+    Every attribute except "category" and "src" goes onto the iframe. The slot replaces the default placeholder text.
+    When the category needs no consent (inactive in the config, or the package disabled) - a plain iframe.
 --}}
 @props(['category' => 'media', 'src'])
 @php($cookieConsent = app(\StudioDevs\CookieConsent\CookieConsent::class))

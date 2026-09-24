@@ -22,7 +22,7 @@ class CookieConsentServiceProvider extends ServiceProvider
         $this->loadTranslationsFrom(__DIR__.'/../lang', 'cookie-consent');
         Blade::anonymousComponentPath(__DIR__.'/../resources/views/components', 'cookie-consent');
 
-        // Poza grupą "web": pliki statyczne nie potrzebują sesji ani nie powinny ustawiać cookies.
+        // Outside the "web" group: static files need no session and must not set cookies.
         Route::get('cookie-consent/assets/{file}', AssetController::class)
             ->whereIn('file', array_keys(CookieConsent::ASSETS))
             ->name('cookie-consent.asset');

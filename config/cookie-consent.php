@@ -4,11 +4,11 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Włącznik
+    | Master switch
     |--------------------------------------------------------------------------
     |
-    | Wyłączenie usuwa baner, skrypty i link ustawień. Osadzenia
-    | (<x-cookie-consent::embed>) renderują się wtedy od razu jako iframe.
+    | When disabled, the banner, scripts and settings button are not rendered
+    | and embeds (<x-cookie-consent::embed>) render as plain iframes.
     |
     */
 
@@ -16,20 +16,20 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Kategorie wymagające zgody
+    | Categories that require consent
     |--------------------------------------------------------------------------
     |
-    | Kategoria "necessary" (cookies niezbędne, np. sesja i CSRF) jest zawsze
-    | włączona i nie trzeba jej tu wpisywać. Baner pokazuje się tylko wtedy,
-    | gdy aktywna jest co najmniej jedna kategoria poniżej - strona bez
-    | analityki i bez osadzeń z zewnątrz nie potrzebuje banera wcale.
+    | The "necessary" category (strictly necessary cookies such as the session
+    | and CSRF token) is always on and doesn't need to be listed here. The
+    | banner only shows up when at least one category below is active - a site
+    | without analytics or third-party embeds doesn't need a banner at all.
     |
-    | Nowa kategoria = nowy klucz tutaj + tłumaczenie
-    | cookie-consent::messages.categories.<klucz>.title/description
-    | (np. w lang/vendor/cookie-consent/pl/messages.php projektu).
+    | New category = a new key here + a translation for
+    | cookie-consent::messages.categories.<key>.title/description
+    | (e.g. in your app's lang/vendor/cookie-consent/en/messages.php).
     |
-    | 'auto_clear' - cookies usuwane, gdy użytkownik wycofa zgodę. Wartość
-    | zaczynająca się i kończąca na "/" jest traktowana jako wyrażenie regularne.
+    | 'auto_clear' - cookies erased when the user withdraws consent. A value
+    | that starts and ends with "/" is treated as a regular expression.
     |
     */
 
@@ -40,7 +40,7 @@ return [
             'auto_clear' => ['/^_ga/', '_gid'],
         ],
 
-        // Osadzenia z zewnętrznych serwisów: Google Maps, YouTube itp.
+        // Content embedded from third-party services: Google Maps, YouTube, etc.
         'media' => [
             'active' => env('COOKIE_CONSENT_MEDIA', false),
             'auto_clear' => [],
@@ -58,9 +58,9 @@ return [
     | Google Analytics (GA4)
     |--------------------------------------------------------------------------
     |
-    | Po ustawieniu ID skrypt gtag.js jest wstawiany jako zablokowany
-    | (type="text/plain", data-category="analytics") i uruchamia się dopiero po
-    | zgodzie na kategorię "analytics".
+    | When an ID is set, gtag.js is rendered as a blocked script
+    | (type="text/plain", data-category="analytics") and only runs once the
+    | user consents to the "analytics" category.
     |
     */
 
@@ -68,12 +68,12 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Polityka prywatności
+    | Privacy policy
     |--------------------------------------------------------------------------
     |
-    | Nazwa trasy albo URL. Link trafia do stopki banera. null = bez linku.
-    | Strona wielojęzyczna: tablica per język, np.
-    | ['pl' => 'privacy.show', 'en' => 'privacy.show.en'].
+    | A route name or a URL, linked in the banner footer. null = no link.
+    | Multilingual sites can pass an array keyed by locale, e.g.
+    | ['en' => 'privacy', 'pl' => 'privacy.pl'].
     |
     */
 
@@ -81,11 +81,11 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Język
+    | Language
     |--------------------------------------------------------------------------
     |
-    | null = app()->getLocale(). Paczka ma tłumaczenia pl i en; dla innego
-    | języka bez tłumaczeń używany jest 'fallback_locale'.
+    | null = app()->getLocale(). The package ships with en and pl translations;
+    | any other locale without translations falls back to 'fallback_locale'.
     |
     */
 
@@ -95,11 +95,11 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Rewizja zgody
+    | Consent revision
     |--------------------------------------------------------------------------
     |
-    | Podbij, gdy zmieniają się kategorie albo sposób przetwarzania danych -
-    | wszyscy odwiedzający zobaczą baner ponownie.
+    | Bump it when categories or the way you process data change - every
+    | visitor will be asked for consent again.
     |
     */
 
@@ -107,7 +107,7 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Cookie przechowujące zgodę
+    | Cookie storing the consent
     |--------------------------------------------------------------------------
     */
 
@@ -118,12 +118,12 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Wygląd
+    | Appearance
     |--------------------------------------------------------------------------
     |
-    | Przekazywane wprost do guiOptions biblioteki:
+    | Passed as-is to the library's guiOptions:
     | https://cookieconsent.orestbida.com/reference/configuration-reference.html#guioptions
-    | Kolory zmienia się zmiennymi CSS (--cc-btn-primary-bg itd.) w CSS projektu.
+    | Colours are changed with CSS variables (--cc-btn-primary-bg etc.) in your CSS.
     |
     */
 
