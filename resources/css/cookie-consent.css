@@ -1,0 +1,58 @@
+/*
+ * Placeholder osadzeń <x-cookie-consent::embed>. Kolory przez zmienne CSS -
+ * nadpisz je w CSS projektu (np. na :root). Wygląd samego banera zmienia się
+ * zmiennymi biblioteki na #cc-main (--cc-btn-primary-bg itd.).
+ */
+.cc-embed {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.cc-embed__placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    box-sizing: border-box;
+    height: 100%;
+    min-height: 12rem;
+    padding: 1.5rem;
+    text-align: center;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    background: var(--cc-embed-bg, #f1f1ef);
+    color: var(--cc-embed-color, #2c2f2e);
+}
+
+.cc-embed__placeholder[hidden] {
+    display: none;
+}
+
+.cc-embed__description {
+    max-width: 32rem;
+    margin: 0;
+}
+
+.cc-embed__button {
+    padding: 0.625rem 1.25rem;
+    border: 0;
+    border-radius: var(--cc-embed-button-radius, 0.375rem);
+    font: inherit;
+    font-weight: 600;
+    cursor: pointer;
+    background: var(--cc-embed-button-bg, #30363c);
+    color: var(--cc-embed-button-color, #fff);
+}
+
+.cc-embed__button:hover,
+.cc-embed__button:focus-visible {
+    background: var(--cc-embed-button-hover-bg, #000);
+}
+
+.cc-embed__settings {
+    font-size: 0.8125rem;
+    color: inherit;
+    text-decoration: underline;
+}
